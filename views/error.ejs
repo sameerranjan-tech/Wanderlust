@@ -1,0 +1,21 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+<div class="container d-flex flex-column justify-content-center align-items-center text-center" style="min-height: 80vh;">
+
+  <!-- Error Code -->
+  <h3 class="display-1 fw-bold text-danger">
+    <%= err.status || 500 %>
+  </h3>
+
+  <!-- Error Message -->
+  <p class="mb-3">
+    <%= err.message || "Something went wrong!" %>
+  </p>
+
+
+  <!-- Back Button -->
+  <a href="/listings" class="btn btn-dark mt-3">    
+    Go Back
+  </a>
+
+</div>

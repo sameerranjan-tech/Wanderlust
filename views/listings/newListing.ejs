@@ -1,0 +1,104 @@
+<% layout("/layouts/boilerplate.ejs") %>
+  <link rel="stylesheet" href="/css/newListing.css" />
+
+  <div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4 p-4">
+
+      <h3 class="mb-4 fw-semibold">Add New Listing</h3>
+
+      <form action="/listings" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+
+        <!-- Title -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Title</label>
+          <input name="listing[title]" type="text" class="form-control" placeholder="Enter Title of Place" required>
+          <div class="invalid-feedback">Please enter a title</div>
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Description</label>
+          <textarea name="listing[description]" class="form-control" rows="3" placeholder="Enter description of Place"
+            required></textarea>
+          <div class="invalid-feedback">Please enter a short description</div>
+        </div>
+
+        <!-- Image -->
+        <div class="mb-3">
+
+          <!-- Upload New -->
+          <label class="form-label fw-semibold">
+            Upload New Image
+            <span class="text-muted small">(.jpg, .jpeg, .png)</span>
+          </label>
+
+          <input name="image" type="file" class="form-control" accept="image/*" onchange="previewImage(event)">
+
+          <!-- Preview Image -->
+          <div class="mt-3">
+            <label class="form-label fw-semibold">Preview</label>
+            <img id="preview" class="preview-img" />
+          </div>
+
+        </div>
+
+        <!-- Price + Category Row -->
+        <div class="row">
+
+          <!-- Price -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-semibold">Price (₹ / night)</label>
+            <input name="listing[price]" type="number" class="form-control" placeholder="Enter price" required>
+            <div class="invalid-feedback">Enter valid price</div>
+          </div>
+
+          <!-- Category -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-semibold">Category</label>
+            <select name="listing[category]" class="form-select" required>
+              <option value="">Select Category</option>
+              <option value="Beach">🏖 Beach</option>
+              <option value="Mountain">⛰ Mountain</option>
+              <option value="City">🏙 City</option>
+              <option value="Forest">🌳 Forest</option>
+              <option value="Snow">❄️ Snow</option>
+              <option value="Lake">💧 Lake</option>
+              <option value="Camping">🏕 Camping</option>
+              <option value="Historical">🏛 Historical</option>
+              <option value="Desert">☀️ Desert</option>
+              <option value="Farm">🚜 Farm</option>
+            </select>
+            <div class="invalid-feedback">Please select category</div>
+          </div>
+
+        </div>
+
+        <!-- Location Row -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-semibold">City</label>
+            <input name="listing[location]" type="text" class="form-control" placeholder="Enter city" required>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-semibold">Country</label>
+            <input name="listing[country]" type="text" class="form-control" placeholder="Enter country" required>
+          </div>
+        </div>
+
+        <!-- Seller Info (auto from logged-in user) -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Contact Number</label>
+          <input type="text" class="form-control" value="<%= currUser.phone %>" readonly>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-danger w-100 mt-3">
+          Add Listing
+        </button>
+
+      </form>
+    </div>
+  </div>
+  <br>
+  <br>

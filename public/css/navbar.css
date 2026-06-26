@@ -1,0 +1,74 @@
+.navbar {
+  font-family: sans-serif;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px 20px; /* 🔥 use padding instead of height */
+  background-color: #fff !important;
+}
+.fa-compass {
+  font-size: 2rem;
+  color: red;
+}
+.nav-link {
+  color: #222222 !important;
+}
+
+.navbar .container,
+.navbar .container-fluid {
+  align-items: center;
+}
+
+.navbar-collapse {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.navbar-nav {
+  gap: 5px;
+}
+
+.search-nav .search-form {
+  width: 420px;
+}
+
+/* Input field */
+.search-form input {
+  border-radius: 15px;
+  border: 2px solid #ff385c; /* red */
+  padding: 8px 14px;
+  outline: none;
+  transition: 0.3s ease;
+}
+
+/* Input focus */
+.search-form input:focus {
+  border-color: #ff385c;
+  box-shadow: 0 0 5px rgba(255, 56, 92, 0.4);
+}
+
+/* Button */
+.search-form button {
+  border-radius: 15px;
+  background-color: #ff385c;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  transition: 0.3s ease;
+}
+
+/* Button hover */
+.search-form button:hover {
+  background-color: #e03150;
+}
+
+/* Make them look like one unit */
+.search-form input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.search-form button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}

@@ -1,0 +1,212 @@
+<% layout("/layouts/boilerplate.ejs") %>
+  <link rel="stylesheet" href="/css/listing.css" />
+
+  <a href="/listings" class="back-btn">← Back</a>
+  <div class="wholeListing">
+
+    <!-- Listing Section -->
+    <div class="listing">
+      <p class="owner">
+        <i class="fa-solid fa-user"></i>
+        <span>
+          <%= listing.owner?.username || "Anonymous Host"%>
+        </span>
+      </p>
+      <div class="image-container">
+        <img src="<%= listing.image.url %>">
+
+        <form action="/listings/<%= listing._id %>/wishlist" method="POST">
+          <button type="submit" class="wishlist-btn" onclick="event.stopPropagation();">
+
+            <% if(wished){ %>
+              ❤️
+              <% } else { %>
+                🤍
+                <% } %>
+
+          </button>
+        </form>
+
+      </div>
+
+      <div class="listing-content">
+        <h3>
+          <%= listing.title %>
+        </h3>
+
+        <p class="description">
+          <%= listing.description %>
+        </p>
+
+        <div class="divider"></div>
+
+        <div class="category-badge">
+          <i class="fa-solid fa-tag"></i><strong>Category: </strong>
+          <span>
+            <%= listing.category %>
+          </span>
+        </div>
+        <br>
+        <div class="info">
+          <p><strong>Location:</strong>
+            <%= listing.location %>
+          </p>
+          <p><strong>Country:</strong>
+            <%= listing.country %>
+          </p>
+        </div>
+
+        <p class="price">
+          Price:
+          <span>₹ <%= listing.price.toLocaleString("en-IN") %> / night</span>
+        </p>
+
+        <!-- Contact -->
+       <div class="contact">
+  <p>
+    <strong>Contact Seller: </strong>+91
+    <%= listing.owner?.phone || "Not Available" %>
+  </p>
+</div>
+
+<% if(listing.owner?.phone) { %>
+  <a href="https://wa.me/91<%= listing.owner.phone %>" target="_blank" class="whatsapp-btn">
+    <i class="fa-brands fa-whatsapp"></i>
+    Chat on WhatsApp
+  </a>
+<% } %>
+
+     <% if(currUser && listing.owner && currUser.id == listing.owner._id){ %>
+  <div class="editDelete">
+    <form method="GET" action="/listings/<%= listing._id %>/edit">
+      <button>Edit</button>
+    </form>
+
+    <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE"
+      onsubmit="return confirm('Do you want to delete?');">
+      <button>Delete</button>
+    </form>
+  </div>
+<% } %>
+    </div>
+    <br>
+    <br>
+    <hr>
+    <br>
+    <div class="map-section">
+      <h4 class="map-title">Where you'll be</h4>
+
+      <div class="map-card">
+        <div id="map"></div>
+      </div>
+    </div>
+    <br>
+    <hr>
+    <% if(currUser){ %>
+      <!-- Review Form -->
+      <div class="container mt-4">
+        <div class="card shadow-sm border-0 rounded-4 p-4">
+          <h5 class="mb-3 fw-semibold">Leave a Review</h5>
+
+          <form method="post" action="/listings/<%= listing._id %>/reviews" class="needs-validation" novalidate>
+
+            <label class="form-label fw-semibold">Rating</label>
+            <fieldset class="starability-coinFlip">
+              <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked
+                aria-label="No rating." />
+              <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+              <label for="first-rate1" title="Terrible">1 star</label>
+              <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+              <label for="first-rate2" title="Not good">2 stars</label>
+              <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+              <label for="first-rate3" title="Average">3 stars</label>
+              <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+              <label for="first-rate4" title="Very good">4 stars</label>
+              <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+              <label for="first-rate5" title="Amazing">5 stars</label>
+            </fieldset>
+
+            <br>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Review</label>
+              <textarea name="review[comment]" class="form-control" rows="4"
+                placeholder="Please enter your review"></textarea>
+              <!-- <div class="invalid-feedback">Please enter your review</div> -->
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 mt-3">
+              Submit Review
+            </button>
+          </form>
+        </div>
+      </div>
+      <% } %>
+        <br><br>
+        <!-- Reviews Section -->
+        <div class="container mt-4">
+          <h4 class="mb-3 fw-semibold">Reviews</h4>
+
+          <% if(listing.reviews.length===0){ %>
+            <p class="text-muted">No reviews yet.</p>
+            <% } %>
+
+
+              <div class="row">
+                <% for(let review of listing.reviews){ %>
+
+                  <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm border-0 rounded-4 h-100">
+
+                      <div class="card-body d-flex flex-column">
+
+                        <!-- Top Section -->
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                         <p><strong>@ </strong>
+  <%= review.owner?.username || "Deleted User" %>
+</p>
+
+                          <small class="text-muted">
+                            <%= new Date(review.createdAt).toLocaleDateString("en-IN") %>
+                          </small>
+                        </div>
+
+                        <!-- Rating -->
+
+                        <div class="mb-2 d-flex align-items-center gap-1">
+                          <span class="starability-result small-stars" data-rating="<%= review.rating %>">
+                          </span>
+                        </div>
+
+
+                        <!-- Comment -->
+                        <p class="card-text text-muted mb-3">
+                          <%= review.comment %>
+                        </p>
+
+                        <!-- Delete Button -->
+                      <% if(currUser && review.owner && currUser.id == review.owner._id){ %>
+                          <form method="post"
+                            action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+                            class="mt-auto">
+                            <button class="btn btn-sm btn-outline-danger rounded-pill px-3">
+                              🗑 Delete
+                            </button>
+                          </form>
+                          <% } %>
+
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <% } %>
+              </div>
+
+
+        </div>
+
+        <script>
+          const title = "<%= listing.title %>";
+          const listingLocation = "<%= listing.location %>, <%= listing.country %>";
+        </script>

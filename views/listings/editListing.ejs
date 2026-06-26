@@ -1,0 +1,111 @@
+<% layout("/layouts/boilerplate.ejs") %>
+  <link rel="stylesheet" href="/css/newListing.css" />
+
+  <div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4 p-4">
+
+      <h3 class="mb-4 fw-semibold">Edit Listing</h3>
+
+      <form method="POST" action="/listings/<%= listing._id %>?_method=PATCH" class="needs-validation" novalidate
+        enctype="multipart/form-data">
+
+        <!-- Title -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Title</label>
+          <input name="listing[title]" type="text" class="form-control" value="<%= listing.title %>" required>
+          <div class="invalid-feedback">Please enter a title</div>
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Description</label>
+          <textarea name="listing[description]" class="form-control" rows="3"
+            required><%= listing.description %></textarea>
+          <div class="invalid-feedback">Please enter a short description</div>
+        </div>
+
+        <!-- Image -->
+        <div class="mb-3">
+
+          <!-- Original Image -->
+          <label class="form-label fw-semibold">Current Image</label>
+          <div>
+            <img src="<%= listing.image.url %>" class="img-thumbnail mb-2"
+              style="width: 150px; height: 100px; object-fit: cover;">
+          </div>
+
+          <!-- Upload New -->
+          <label class="form-label fw-semibold">
+            Upload New Image
+            <span class="text-muted small">(.jpg, .jpeg, .png)</span>
+          </label>
+
+          <input name="image" type="file" class="form-control" accept="image/*" onchange="previewImage(event)">
+
+          <!-- Preview Image -->
+          <div class="mt-3">
+            <label class="form-label fw-semibold">Preview</label>
+            <img id="preview" class="preview-img" />
+          </div>
+
+        </div>
+
+        <!-- Price + Category -->
+        <div class="row">
+
+          <!-- Price -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-semibold">Price (₹ / night)</label>
+            <input name="listing[price]" type="number" class="form-control" value="<%= listing.price %>" required>
+            <div class="invalid-feedback">Enter valid price</div>
+          </div>
+
+          <!-- Category -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-semibold">Category</label>
+            <select name="listing[category]" class="form-select" required>
+
+              <option value="" disabled <%=!listing.category ? 'selected' : '' %>>
+                Select Category
+              </option>
+
+              <option value="Beach" <%=listing.category==='Beach' ? 'selected' : '' %>>🏖 Beach</option>
+              <option value="Mountain" <%=listing.category==='Mountain' ? 'selected' : '' %>>⛰ Mountain</option>
+              <option value="City" <%=listing.category==='City' ? 'selected' : '' %>>🏙 City</option>
+              <option value="Forest" <%=listing.category==='Forest' ? 'selected' : '' %>>🌳 Forest</option>
+              <option value="Snow" <%=listing.category==='Snow' ? 'selected' : '' %>>❄️ Snow</option>
+              <option value="Lake" <%=listing.category==='Lake' ? 'selected' : '' %>>💧 Lake</option>
+              <option value="Camping" <%=listing.category==='Camping' ? 'selected' : '' %>>🏕 Camping</option>
+              <option value="Historical" <%=listing.category==='Historical' ? 'selected' : '' %>>🏛 Historical</option>
+              <option value="Desert" <%=listing.category==='Desert' ? 'selected' : '' %>>☀️ Desert</option>
+              <option value="Farm" <%=listing.category==='Farm' ? 'selected' : '' %>>🚜 Farm</option>
+
+            </select>
+            <div class="invalid-feedback">Please select category</div>
+          </div>
+
+        </div>
+
+        <!-- Location -->
+        <div class="row">
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-semibold">City</label>
+            <input name="listing[location]" type="text" class="form-control" value="<%= listing.location %>" required>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label fw-semibold">Country</label>
+            <input name="listing[country]" type="text" class="form-control" value="<%= listing.country %>" required>
+          </div>
+
+        </div>
+
+        <!-- Button -->
+        <button type="submit" class="btn btn-danger w-100 mt-3">
+          Update Listing
+        </button>
+
+      </form>
+    </div>
+  </div>

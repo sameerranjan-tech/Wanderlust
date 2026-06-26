@@ -1,0 +1,4 @@
+.env
+node_modules/
+/FAKE DATA/data.js
+/FAKE DATA/init.js

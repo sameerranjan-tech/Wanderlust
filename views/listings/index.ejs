@@ -1,0 +1,182 @@
+<% layout("/layouts/boilerplate.ejs") %>
+    <link rel="stylesheet" href="/css/index.css">
+    <div class="filters-bar container-fluid">
+        <div class="row justify-content-center">
+
+            <div class="col-4 col-sm-3 col-md-2 col-lg-1 text-center">
+                <a href="/listings" class="filter-item d-flex flex-column align-items-center" data-category="All">
+                    <i class="fa-solid fa-border-all"></i>
+                    <p>All</p>
+                </a>
+            </div>
+
+            <div class="col-4 col-sm-3 col-md-2 col-lg-1 text-center">
+                <a href="/listings?category=Beach&search=<%= search %>&sort=<%= sort %>"
+                    class="filter-item d-flex flex-column align-items-center" data-category="Beach">
+                    <i class="fa-solid fa-umbrella-beach"></i>
+                    <p>Beach</p>
+                </a>
+            </div>
+
+            <div class="col-4 col-sm-3 col-md-2 col-lg-1 text-center">
+                <a href="/listings?category=Mountain&search=<%= search %>&sort=<%= sort %>" class=" filter-item d-flex flex-column
+                    align-items-center" data-category="Mountain">
+                    <i class="fa-solid fa-mountain"></i>
+                    <p>Mountain</p>
+                </a>
+            </div>
+
+            <div class="col-4 col-sm-3 col-md-2 col-lg-1 text-center">
+                <a href="/listings?category=City&search=<%= search %>&sort=<%= sort %>"
+                    class="filter-item d-flex flex-column align-items-center" data-category="City">
+                    <i class="fa-solid fa-city"></i>
+                    <p>City</p>
+                </a>
+            </div>
+
+            <div class="col-4 col-sm-3 col-md-2 col-lg-1 text-center">
+                <a href="/listings?category=Forest&search=<%= search %>&sort=<%= sort %>"
+                    class="filter-item d-flex flex-column align-items-center" data-category="Forest">
+                    <i class="fa-solid fa-tree"></i>
+                    <p>Forest</p>
+                </a>
+            </div>
+
+            <div class="col-4 col-sm-3 col-md-2 col-lg-1 text-center">
+                <a href="/listings?category=Snow&search=<%= search %>&sort=<%= sort %>"
+                    class="filter-item d-flex flex-column align-items-center" data-category="Snow">
+                    <i class="fa-solid fa-snowflake"></i>
+                    <p>Snow</p>
+                </a>
+            </div>
+
+            <div class="col-4 col-sm-3 col-md-2 col-lg-1 text-center">
+                <a href="/listings?category=Lake&search=<%= search %>&sort=<%= sort %>"
+                    class="filter-item d-flex flex-column align-items-center" data-category="Lake">
+                    <i class="fa-solid fa-water"></i>
+                    <p>Lake</p>
+                </a>
+            </div>
+
+            <div class="col-4 col-sm-3 col-md-2 col-lg-1 text-center">
+                <a href="/listings?category=Camping&search=<%= search %>&sort=<%= sort %>"
+                    class="filter-item d-flex flex-column align-items-center" data-category="Camping">
+                    <i class="fa-solid fa-campground"></i>
+                    <p>Camping</p>
+                </a>
+            </div>
+
+            <div class="col-4 col-sm-3 col-md-2 col-lg-1 text-center">
+                <a href="/listings?category=Historical&search=<%= search %>&sort=<%= sort %>"
+                    class="filter-item d-flex flex-column align-items-center" data-category="Historical">
+                    <i class="fa-solid fa-landmark"></i>
+                    <p>Historical</p>
+                </a>
+            </div>
+
+            <div class="col-4 col-sm-3 col-md-2 col-lg-1 text-center">
+                <a href="/listings?category=Desert&search=<%= search %>&sort=<%= sort %>"
+                    class="filter-item d-flex flex-column align-items-center" data-category="Desert">
+                    <i class="fa-solid fa-sun"></i>
+                    <p>Desert</p>
+                </a>
+            </div>
+
+            <div class="col-4 col-sm-3 col-md-2 col-lg-1 text-center">
+                <a href="/listings?category=Farm&search=<%= search %>&sort=<%= sort %>"
+                    class="filter-item d-flex flex-column align-items-center" data-category="Farm">
+                    <i class="fa-solid fa-tractor"></i>
+                    <p>Farm</p>
+                </a>
+            </div>
+
+        </div>
+        <div class="filters-side">
+            <div class="toggle-wrapper-sort d-flex justify-content-end align-items-center">
+                <form method="GET" action="/listings">
+
+                    <input type="hidden" name="search" value="<%= search %>">
+
+                    <input type="hidden" name="category" value="<%= category %>">
+
+                    <!-- 🔽 Sort -->
+                    <select name="sort" class="form-select" onchange="this.form.submit()">
+                        <option value="">Sort By</option>
+
+                        <option value="latest" <%=sort==="latest" ? "selected" : "" %>>
+                            Latest
+                        </option>
+
+                        <option value="priceLow" <%=sort==="priceLow" ? "selected" : "" %>>
+                            Price: Low to High
+                        </option>
+
+                        <option value="priceHigh" <%=sort==="priceHigh" ? "selected" : "" %>>
+                            Price: High to Low
+                        </option>
+                    </select>
+
+                </form>
+            </div>
+
+
+
+            <div class="toggle-wrapper d-flex justify-content-end align-items-center">
+                <div class="form-check form-switch custom-toggle">
+                    <input class="form-check-input" type="checkbox" id="taxToggle">
+                    <label class="form-check-label" for="taxToggle">
+                        Show total price<br>
+                        <span class="sub-text">(incl. taxes)</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="Outer">
+        <div class="OuterListing">
+            <% if(listings.length==0){ %>
+                <p>"Looks like there are no listings matching your filters.<br>
+                    Try adjusting your search or explore all listings."</p>
+                <% } %>
+                    <% for(let listing of listings){ %>
+                        <a href="/listings/<%= listing._id %>">
+                            <div class="listing">
+                                <div class="image-container">
+                                    <img src="<%= listing.image.url %>">
+
+                                    <form action="/listings/<%= listing._id %>/wishlist" method="POST">
+                                        <button type="submit" class="wishlist-btn" onclick="event.stopPropagation();">
+
+                                            <% if(wishlists.has(listing._id.toString())){ %>
+                                                ❤️
+                                                <% } else { %>
+                                                    🤍
+                                                    <% } %>
+
+                                        </button>
+                                    </form>
+
+                                </div>
+                                <b>
+                                    <h3>
+                                        <%= listing.title %>
+                                    </h3>
+                                </b>
+                                <p class="price" data-price="<%= listing.price %>"><span class="price-value">Price: ₹
+                                        <%= listing.price.toLocaleString("en-IN") %>
+                                    </span> / night
+                                </p>
+
+                                <p><strong>Location: </strong>
+                                    <%= listing.location %>
+                                </p>
+                                <p><strong>Country: </strong>
+                                    <%= listing.country %>
+                                </p>
+                            </div>
+                        </a>
+
+                        <% } %>
+        </div>
+    </div>

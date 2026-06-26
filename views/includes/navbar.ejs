@@ -1,0 +1,55 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item-left">
+          <a class="nav-link active" href="/listings">Explore</a>
+        </li>
+      </ul>
+
+      <div class="search-nav mx-auto">
+        <form class="d-flex search-form" action="/listings" method="GET">
+          <input type="hidden" name="category" value="<%= typeof category !== 'undefined' ? category : '' %>">
+          <input type="hidden" name="sort" value="<%= typeof sort !== 'undefined' ? sort : '' %>">
+          <input name="search" class="form-control me-2" type="search" placeholder="Search" value="<%= typeof search !== 'undefined' ? search : '' %>">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item-right">
+          <a class="nav-link" href="/listings/new">Airbnb your home</a>
+        </li>
+        
+        <% if (typeof currUser === 'undefined' || !currUser) { %>
+          <li class="nav-item-right">
+            <a class="nav-link" href="/signup"><b>Sign-up</b></a>
+          </li>
+          <li class="nav-item-right">
+            <a class="nav-link" href="/login"><b>Login</b></a>
+          </li>
+        <% } %>
+
+        <% if (typeof currUser !== 'undefined' && currUser) { %>
+          <li class="nav-item-right">
+            <a class="nav-link" href="/listings/myWishlists"><b>My Wishlists</b></a>
+          </li>
+          <li class="nav-item-right">
+            <a class="nav-link" href="/listings/myListings"><b>My Listings</b></a>
+          </li>
+          <li class="nav-item-right">
+            <a class="nav-link" href="/logout"><b>Logout</b></a>
+          </li>
+        <% } %>
+      </ul>
+
+    </div>
+  </div>
+</nav>

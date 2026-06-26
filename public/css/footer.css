@@ -1,0 +1,80 @@
+.footer {
+  font-family: "Poppins", sans-serif;
+
+  height: auto;
+  border: 2px solid gray;
+  border-radius: 7px;
+
+  margin: 40px; /* adjust as needed */
+
+  padding: 1rem;
+  background-color: #e1e1e1;
+}
+
+/* Main container */
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Left (logo) */
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-icon {
+  font-size: 1.8rem;
+  color: red;
+}
+
+.footer-brand {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #222222;
+}
+
+/* Links */
+.footer-links a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #222222;
+  font-size: 0.95rem;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+/* Social icons */
+.footer-social a {
+  margin: 0 8px;
+  font-size: 1.2rem;
+  color: #222222;
+  transition: 0.2s;
+}
+
+.footer-social a:hover {
+  color: red;
+}
+
+/* Bottom */
+.footer-bottom {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}

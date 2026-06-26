@@ -1,0 +1,49 @@
+<% layout("/layouts/boilerplate.ejs") %>
+    <link rel="stylesheet" href="/css/index.css">
+
+    <div class="Outer">
+        <div class="OuterListing">
+
+            <% if(listings.length==0){ %>
+                <p>"Your wishlist is empty. Start exploring and save your favorite listings!"</p>
+                <% } %>
+
+                    <% for(let listing of listings){ %>
+
+                        <div class="listing">
+
+                            <!-- Clickable Card -->
+                            <a href="/listings/<%= listing._id %>" class="listing-link">
+                                <div class="image-container">
+                                    <img src="<%= listing.image.url %>">
+
+                                    <form action="/listings/<%= listing._id %>/wishlist" method="POST">
+                                        <button type="submit" class="wishlist-btn" onclick="event.stopPropagation();">
+                                            ❤️
+                                        </button>
+                                    </form>
+
+                                </div>
+
+                                <h3>
+                                    <%= listing.title %>
+                                </h3>
+
+                                <p class="price">
+                                    Price: ₹ <%= listing.price.toLocaleString("en-IN") %> / night
+                                </p>
+
+                                <p><strong>Location:</strong>
+                                    <%= listing.location %>
+                                </p>
+                                <p><strong>Country:</strong>
+                                    <%= listing.country %>
+                                </p>
+                            </a>
+
+                        </div>
+
+                        <% } %>
+
+        </div>
+    </div>

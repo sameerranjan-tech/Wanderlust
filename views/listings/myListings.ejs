@@ -1,0 +1,54 @@
+<% layout("/layouts/boilerplate.ejs") %>
+    <link rel="stylesheet" href="/css/myListings.css">
+
+    <div class="Outer">
+        <div class="OuterListing">
+
+            <% if(listings.length==0){ %>
+                <p>"No listings yet. Start by creating your first listing!"</p>
+                <% } %>
+
+                    <% for(let listing of listings){ %>
+
+                        <div class="listing">
+
+                            <!-- Clickable Card -->
+                            <a href="/listings/<%= listing._id %>" class="listing-link">
+                                <div class="image-container">
+                                    <img src="<%= listing.image.url %>">
+                                </div>
+
+                                <h3>
+                                    <%= listing.title %>
+                                </h3>
+
+                                <p class="price">
+                                    Price: ₹ <%= listing.price.toLocaleString("en-IN") %> / night
+                                </p>
+
+                                <p><strong>Location:</strong>
+                                    <%= listing.location %>
+                                </p>
+                                <p><strong>Country:</strong>
+                                    <%= listing.country %>
+                                </p>
+                            </a>
+
+                            <!-- Buttons OUTSIDE -->
+                            <div class="actions">
+                                <a href="/listings/<%= listing._id %>/edit">
+                                    <button>Edit</button>
+                                </a>
+
+                                <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST"
+                                    style="display:inline;">
+                                    <button type="submit">Delete</button>
+                                </form>
+                            </div>
+
+                        </div>
+
+                        <% } %>
+
+        </div>
+    </div>
